@@ -1,9 +1,9 @@
+const config = require('../config/config.js')
 const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'))
 
 function hashPassword (user, options) {
   const SALT_FACTOR = 8
-
   if (!user.changed('password')) {
     return
   }
@@ -26,13 +26,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: DataTypes.STRING,
     bio: DataTypes.STRING,
-    avatar: DataTypes.STRING
+    avatar: {
+      type: DataTypes.STRING,
+      get: function () {
+        if (this.getDataValue('avatar')) {
+          return 'http://localhost'.concat(':', config.port).concat('/', this.getDataValue('avatar').replace('\',\'/'))
+        }
+      },
+      set: function (val) {
+        return this.setDataValue('avatar', val.replace('http://localhost'.concat(':', config.port).concat('/'), ''))
+      }
+    }
   },
   {
     hooks: {
       beforeCreate: hashPassword,
       beforeUpdate: hashPassword
-    }
+    },
+    individualHooks: true
   })
 
   User.prototype.comparePassword = function (password) {

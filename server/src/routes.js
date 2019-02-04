@@ -23,6 +23,8 @@ var upload = multer({ storage: storage })
 
 module.exports = (app) => {
   app.post('/register', upload.single('avatar'), AuthControllerPolicy.register, AuthController.register)
+  app.put('/profile', isAuthenticated, upload.single('avatar'), AuthController.updateProfile)
+  app.put('/password', isAuthenticated, AuthController.changePassword)
   app.post('/login', AuthController.login)
   app.get('/recipes', RecipeController.getRecipes)
   app.get('/recipe/:id', RecipeController.getRecipe)

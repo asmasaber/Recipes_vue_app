@@ -5,13 +5,19 @@
         <v-layout row wrap>
           <v-flex xs2>
             <v-stepper-step editable step="1">Profile Info</v-stepper-step>
-            <v-stepper-step editable step="2">Your Recipes</v-stepper-step>
+            <v-stepper-step editable step="2">Change Password</v-stepper-step>
+            <v-stepper-step editable step="3">Your Recipes</v-stepper-step>
           </v-flex>
           <v-flex xs10>
             <v-stepper-content step="1">
-              <div class="mb-5" height="200px"></div>
+              <Profile></Profile>
             </v-stepper-content>
-            <v-stepper-content step="2">
+             <v-stepper-content step="2">
+              <div class="mb-5" height="200px">
+                <ChangePassword></ChangePassword>
+              </div>
+            </v-stepper-content>
+            <v-stepper-content step="3">
               <div class="mb-5" height="200px">
                 <Recipes></Recipes>
               </div>
@@ -25,6 +31,8 @@
 
 <script>
 import Recipes from './user-Recipes.vue'
+import Profile from './edit-profile.vue'
+import ChangePassword from './change-password.vue'
 import AuthService from '@/services/AuthService'
 
 import { mapState } from 'vuex'
@@ -55,7 +63,9 @@ export default {
     }
   },
   components: {
-    Recipes
+    Recipes,
+    Profile,
+    ChangePassword
   }
 }
 </script>

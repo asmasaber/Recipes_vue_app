@@ -10,5 +10,11 @@ export default {
   },
   login (credentials) {
     return api().post('login', credentials)
+  },
+  updateProfile (formData) {
+    return api().put('profile', formData)
+  },
+  changePassword (formData) {
+    return api().put('password', formData)
   }
 }
