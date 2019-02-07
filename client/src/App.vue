@@ -12,9 +12,12 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
+import Header from '@/components/ContainerComponents/Header.vue'
 export default {
   name: 'App',
+  async created () {
+    this.$store.dispatch('requestRecipes')
+  },
   components: {
     Header
   }

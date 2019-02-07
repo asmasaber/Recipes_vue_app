@@ -186,7 +186,7 @@
             }
 </style>
 <script>
-import RecipeService from '@/services/RecipeService'
+import RecipeService from '../../services/RecipeService'
 import EditRecipeCard from './edit-recipe.vue'
 
 export default {
@@ -200,32 +200,24 @@ export default {
     recipe: {}
   },
   methods: {
-    async deleteRecipe () {
+    deleteRecipe () {
       try {
-        const response = await RecipeService.delete(this.recipe.id)
-        console.log(response)
-        this.$root.$emit('updateRecipes', 'update after delete!')
+        RecipeService.delete(this.recipe.id)
+        this.$store.dispatch('requestRecipes')
       } catch (error) {
         this.error = error.response.data.error
       }
     },
     saveRecipe () {
       try {
-        const response = this.$refs.foo.updateRecipe()
-        console.log(response)
+        this.$refs.foo.updateRecipe()
         this.close()
-        this.$root.$emit('updateRecipes', 'update after update!')
+        this.$store.dispatch('requestRecipes')
       } catch (error) {
         console.error(error)
       }
     },
-    openEditDialog () {
-    },
-    updateRecipe () {
-
-    },
     close () {
-      this.$root.$emit('updateRecipes', 'update after update!')
       this.editRecipeDialog = false
     }
   },

@@ -60,8 +60,7 @@
   </v-layout>
 </template>
 <script>
-import RecipeService from '@/services/RecipeService'
-import { mapState } from 'vuex'
+import RecipeService from '../../services/RecipeService'
 
 export default {
   data () {
@@ -113,17 +112,6 @@ export default {
       error: null
     }
   },
-  computed: {
-    ...mapState([
-      'isUserLoggedIn',
-      'user'
-    ])
-  },
-  async created () {
-    if (!this.isUserLoggedIn) {
-      this.$router.push({ name: 'login' })
-    }
-  },
   methods: {
     async addNewRecipe () {
       if (this.$refs.form.validate()) {
@@ -139,8 +127,7 @@ export default {
           if (this.pic) {
             formData.append('avatar', new Blob([this.pic], {type: this.picType}))
           }
-          const response = await RecipeService.create(formData)
-          return response
+          return await RecipeService.create(formData)
         } catch (error) {
           this.error = error.response.data.error
         }

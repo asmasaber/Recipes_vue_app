@@ -10,7 +10,7 @@
           </v-flex>
           <v-flex xs10>
             <v-stepper-content step="1">
-              <Profile></Profile>
+              <EditProfile></EditProfile>
             </v-stepper-content>
              <v-stepper-content step="2">
               <div class="mb-5" height="200px">
@@ -19,7 +19,7 @@
             </v-stepper-content>
             <v-stepper-content step="3">
               <div class="mb-5" height="200px">
-                <Recipes></Recipes>
+                <UserRecipes></UserRecipes>
               </div>
             </v-stepper-content>
           </v-flex>
@@ -30,12 +30,9 @@
 </template>
 
 <script>
-import Recipes from './user-Recipes.vue'
-import Profile from './edit-profile.vue'
-import ChangePassword from './change-password.vue'
-import AuthService from '@/services/AuthService'
-
-import { mapState } from 'vuex'
+import UserRecipes from '../RecipeComponents/user-Recipes.vue'
+import EditProfile from '../AuthComponents/edit-profile.vue'
+import ChangePassword from '../AuthComponents/change-password.vue'
 
 export default {
   data () {
@@ -43,28 +40,9 @@ export default {
       e13: 2
     }
   },
-  computed: {
-    ...mapState([
-      'isUserLoggedIn',
-      'user'
-    ])
-  },
-  async created () {
-    // if (!this.isUserLoggedIn) {
-    //   this.$router.push({ name: 'login' })
-    // }
-  },
-  route: {
-    // Check the users auth status before
-    // allowing navigation to the route
-    canActivate () {
-      console.log('can activate')
-      return AuthService.user.authenticated
-    }
-  },
   components: {
-    Recipes,
-    Profile,
+    UserRecipes,
+    EditProfile,
     ChangePassword
   }
 }

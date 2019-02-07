@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import store from '../store/store.js'
-import AuthService from '@/services/AuthService'
+import AuthService from '../../services/AuthService'
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -60,18 +61,21 @@ export default {
       oldPassword: ''
     }
   },
+  computed: {
+    ...mapState([
+      'user'
+    ])
+  },
   methods: {
     async save () {
       if (this.$refs.form.validate()) {
         try {
           this.error = null
-          let formData = {
-            id: store.state.user.id,
+          const response = await AuthService.changePassword({
+            id: this.user.id,
             newPassword: this.newPassword,
             oldPassword: this.oldPassword
-          }
-
-          const response = await AuthService.changePassword(formData)
+          })
           this.$store.dispatch('setToken', response.data.token)
           this.$store.dispatch('setUser', response.data.user)
           this.resetControls()

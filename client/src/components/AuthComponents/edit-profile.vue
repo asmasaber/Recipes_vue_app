@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import store from '../store/store.js'
-import AuthService from '@/services/AuthService'
+import AuthService from '../../services/AuthService'
+
 export default {
   data () {
     return {
@@ -79,12 +79,17 @@ export default {
             'Password Not Matched'
         ]
       },
-      error: null,
-      user: {}
+      error: null
+    }
+  },
+  computed: {
+    user: {
+      get () {
+        return Object.assign({}, this.$store.state.user)
+      }
     }
   },
   created () {
-    this.user = Object.assign({}, store.state.user)
     this.avatarShow = this.user.avatar
   },
   methods: {
@@ -109,7 +114,7 @@ export default {
           formData.append('fname', this.user.fname)
           formData.append('lname', this.user.lname)
           formData.append('bio', this.user.bio)
-          if (store.state.user.avatar !== this.user.avatar) {
+          if (this.$store.state.user.avatar !== this.user.avatar) {
             formData.append('avatar', new Blob([this.user.avatar], {type: this.avatarType}))
           }
 
@@ -122,9 +127,11 @@ export default {
       }
     },
     cancle: function () {
-      this.user = Object.assign({}, store.state.user)
-      this.avatarShow = this.user.avatar
-      this.$$['avatar'].reset()
+      this.user.avatar = this.$store.state.user.avatar
+      this.user.fname = this.$store.state.user.fname
+      this.user.lname = this.$store.state.user.lname
+      this.user.bio = this.$store.state.user.bio
+      console.log(this.user.bio)
     }
   }
 }

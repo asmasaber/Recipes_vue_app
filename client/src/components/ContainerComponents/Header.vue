@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import AddRecipe from './add-recipe.vue'
+import AddRecipe from '../RecipeComponents/add-recipe.vue'
 export default {
   data () {
     return {
@@ -86,12 +86,12 @@ export default {
         name: 'root'
       })
     },
-    saveRecipe () {
+    async saveRecipe () {
       try {
-        const response = this.$refs.foo.addNewRecipe()
-        console.log(response)
+        await this.$refs.foo.addNewRecipe()
         this.close()
-        this.$root.$emit('updateRecipes', 'update after add!')
+        console.log('add new recipe')
+        this.$store.dispatch('requestRecipes')
       } catch (error) {
         console.error(error)
       }

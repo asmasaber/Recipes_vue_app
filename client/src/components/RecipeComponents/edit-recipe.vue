@@ -40,20 +40,14 @@
                     <v-textarea label="Description" :rules="validationRules.descriptionRules" v-model="recipe.description" required></v-textarea>
                   </v-flex>
                   <v-flex xs12  style="position: relative;">
-                    <!-- <v-btn absolute dark fab right color="pink" @click="addNewIngredient">
-                      <v-icon>add</v-icon>
-                    </v-btn> -->
-                    <!-- <v-text-field id="ingredient" label="Enter Ingredient" :rules="validationRules.ingredientsRules" v-model="ingredient" required></v-text-field>
-                    <p class="ingredients"><span>Ingredients:&nbsp;</span>{{ recipe.ingredients.join(', ') }}.</p> -->
-
-                      <p class="ingredients"><span>Ingredients:&nbsp;</span></p>
-                      <vue-tags-input
-                            v-model="ingredient"
-                            :tags="ingredients"
-                            @tags-changed="newIngredients => ingredients = newIngredients"
-                            placeholder="Enter Ingredient"
-                            allow-edit-tags
-                          />
+                    <p class="ingredients"><span>Ingredients:&nbsp;</span></p>
+                    <vue-tags-input
+                          v-model="ingredient"
+                          :tags="ingredients"
+                          @tags-changed="newIngredients => ingredients = newIngredients"
+                          placeholder="Enter Ingredient"
+                          allow-edit-tags
+                        />
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -69,17 +63,16 @@
   </v-layout>
 </template>
 <script>
-import RecipeService from '@/services/RecipeService'
+import RecipeService from '../../services/RecipeService'
 import VueTagsInput from '@johmun/vue-tags-input'
 
 export default {
   name: 'EditRecipeCard',
   props: {
-    recipe: {}
+    recipe: null
   },
   data () {
     return {
-      // recipe: this.initialRecipe,
       valid: false,
       picShow: this.recipe.avatar,
       pic: '',
